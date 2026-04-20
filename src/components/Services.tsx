@@ -1,117 +1,115 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, ArrowUpRight, Database, Zap, Cpu } from "lucide-react";
+import { ArrowUpRight, Database, Cpu, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 const services = [
   {
     icon: Database,
-    title: "AI Growth System",
-    description: "Your full lead engine on autopilot. Capture, qualify, and follow up instantly.",
+    title: "Instant Lead Response",
+    description: "Every inbound message gets a fast, human-sounding reply that keeps the buyer engaged while intent is highest.",
     features: [
-      "Instant AI replies (WA/IG)",
-      "Automated qualification",
-      "No manual CRM entry",
-      "Real-time reporting",
+      "WhatsApp, Instagram, and web forms",
+      "Smart replies trained on your offer",
+      "Lead source and intent tracking",
+      "Daily conversion summaries",
     ],
-    popular: true,
   },
   {
-    icon: Zap,
-    title: "CRM & Automation Pack",
-    description: "Fix the leaks in your pipeline. Sync your channels and automate routing.",
+    icon: Sparkles,
+    title: "Qualification & Booking",
+    description: "Separate serious buyers from casual browsers, then move qualified leads straight into a booked call.",
     features: [
-      "Channel synchronization",
-      "Smart routing rules",
-      "API integrations",
-      "Follow-up sequences",
+      "Budget, timeline, and need checks",
+      "Calendar booking flows",
+      "Automated reminders",
+      "No-show reduction sequences",
     ],
-    popular: false,
   },
   {
     icon: Cpu,
-    title: "Micro Automation",
-    description: "One high-friction workflow fixed in 24-48 hours. Start small, scale fast.",
+    title: "Automation Sprint",
+    description: "Remove the manual sales and operations steps that slow your team down, one high-impact workflow at a time.",
     features: [
-      "Single workflow scoped",
-      "Webhook/API setup",
-      "24-48h deployment",
-      "Scaling upgrade path",
+      "CRM and spreadsheet cleanup",
+      "Webhook and API connections",
+      "Follow-up task automation",
+      "48-hour first launch window",
     ],
-    popular: false,
   },
 ];
 
 export default function Services() {
   return (
-    <section id="services" className="bg-surface-muted/30">
-      <div className="section-container">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-primary font-bold uppercase tracking-widest text-sm"
+    <section id="services" className="relative overflow-hidden">
+      <div className="section-container relative z-10">
+        <div className="max-w-4xl mb-24">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-4 mb-8"
           >
-            Outcome-First Solutions
-          </motion.span>
+            <div className="h-px w-12 bg-secondary/50" />
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-secondary">
+              What We Build
+            </span>
+          </motion.div>
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl lg:text-5xl font-extrabold mt-4 mb-6 tracking-tighter"
+            className="text-[clamp(2.5rem,6vw,5rem)] font-black leading-[0.9] uppercase mb-10"
           >
-            Professional Automation Systems, <br /> Built for Your Bottom Line.
+            Systems that turn <br />
+            <span className="serif italic lowercase font-normal tracking-tight opacity-90 text-secondary">attention into appointments.</span>
           </motion.h2>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-foreground/60 text-lg"
+            className="text-white/55 text-xl max-w-2xl leading-relaxed"
           >
-            No consulting-only fluff. We install the actual infrastructure that grows your business.
+            We focus on the moments that create revenue: fast replies, better qualification, clean handoff, and persistent follow-up until the lead books or opts out.
           </motion.p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, idx) => (
             <motion.div
-              key={idx}
+              key={service.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className={`glass p-8 rounded-3xl relative overflow-hidden group hover:translate-y-[-8px] transition-all duration-300 ${
-                service.popular ? "border-primary/50 shadow-[0_0_30px_rgba(16,185,129,0.1)]" : ""
-              }`}
+              transition={{ delay: idx * 0.1, duration: 0.8 }}
+              className="glass p-10 rounded-[2.5rem] relative overflow-hidden group transition-all duration-700 hover:shadow-[0_0_60px_rgba(56,189,248,0.12)] border-white/5 hover:border-secondary/25"
             >
-              {service.popular && (
-                <div className="absolute top-0 right-0 py-1 px-4 bg-primary text-white text-[10px] font-bold rounded-bl-xl uppercase tracking-widest">
-                  Most Popular
+              <div className="relative z-10">
+                <div className="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary mb-10 group-hover:bg-secondary group-hover:text-background transition-all duration-500 shadow-inner" aria-hidden="true">
+                  <service.icon size={32} strokeWidth={1.5} />
                 </div>
-              )}
-              
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-8 group-hover:scale-110 transition-transform duration-300">
-                <service.icon size={28} />
+
+                <h3 className="text-2xl font-black uppercase tracking-tighter mb-6 group-hover:text-secondary transition-colors duration-500">{service.title}</h3>
+
+                <p className="text-white/45 mb-10 text-sm leading-relaxed font-medium">
+                  {service.description}
+                </p>
+
+                <ul className="space-y-5 mb-12" role="list">
+                  {service.features.map((feature) => (
+                    <li key={feature} className="flex items-center gap-4 text-xs font-bold tracking-tight text-white/65" role="listitem">
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent/70 group-hover:bg-accent transition-colors" aria-hidden="true" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <Link href="#contact" className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] group/link text-white/65 hover:text-white transition-colors" aria-label={`Book an audit for ${service.title}`}>
+                  See what we can automate
+                  <ArrowUpRight className="w-4 h-4 opacity-50 group-hover/link:opacity-100 transition-all group-hover/link:translate-x-1 group-hover/link:-translate-y-1 text-secondary" aria-hidden="true" />
+                </Link>
               </div>
-              
-              <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-              <p className="text-foreground/60 mb-8 text-sm leading-relaxed">
-                {service.description}
-              </p>
-              
-              <ul className="space-y-4 mb-10">
-                {service.features.map((feature, fIdx) => (
-                  <li key={fIdx} className="flex items-center gap-3 text-sm font-medium">
-                    <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                      <Check size={12} className="text-primary" />
-                    </div>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              
-              <Link href="#contact" className="flex items-center gap-2 text-primary font-bold group/link">
-                Get This System
-                <ArrowUpRight className="group-hover:translate-x-1 group-hover:translate-y-[-1px] transition-transform" />
-              </Link>
+
+              <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-secondary/5 blur-[50px] rounded-full group-hover:bg-accent/10 transition-all duration-1000" />
             </motion.div>
           ))}
         </div>

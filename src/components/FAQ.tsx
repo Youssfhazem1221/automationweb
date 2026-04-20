@@ -3,23 +3,28 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const faqs = [
   {
-    question: "We already have a system.",
-    answer: "Good. That means you are already generating activity. We plug in and stop the leaks between lead capture, follow-up, and CRM handoff. Existing systems often produce the fastest gains.",
+    question: "What happens during the free audit?",
+    answer: "We review your lead sources, response process, CRM handoff, follow-up timing, and booking flow. You leave with a clear list of automations worth building first, even if we do not work together.",
   },
   {
-    question: "We can do this in-house.",
-    answer: "You could, but internal time has a cost too. Most in-house attempts drag for months and still need maintenance. This is built and deployed in 48 hours with less interruption to your team.",
+    question: "Can we use our current tools?",
+    answer: "Usually, yes. We build around the stack you already use whenever possible, including WhatsApp, Instagram, website forms, CRMs, calendars, spreadsheets, and email platforms.",
   },
   {
-    question: "Is AI reliable enough for our business?",
-    answer: "Each system includes fallback logic and human escalation paths. AI handles the repetitive volume. Your team handles the exceptions. That is the right operating split.",
+    question: "How fast can this go live?",
+    answer: "Most first-scope systems can launch within 48 hours after we have access, approved copy, and the workflow rules. Larger CRM or multi-location builds may need a phased rollout.",
   },
   {
-    question: "What if it does not work for us?",
-    answer: "That is what the free audit is for. If there is no meaningful improvement to be made, we will tell you before any build starts.",
+    question: "Will the AI sound generic?",
+    answer: "No. We train the conversation flow on your offer, tone, qualification criteria, and escalation rules so it behaves like a sharp sales assistant, not a public chatbot.",
+  },
+  {
+    question: "What if a lead needs a person?",
+    answer: "Human handoff is built into the logic. The system escalates high-value, sensitive, or unclear conversations with the context your team needs to respond quickly.",
   },
 ];
 
@@ -27,35 +32,47 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="bg-surface-muted/5">
-      <div className="section-container max-w-4xl">
+    <section id="faq" className="relative overflow-hidden">
+      <div className="section-container">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-extrabold tracking-tighter mb-4">Common Questions</h2>
-          <p className="text-foreground/60">Everything you need to know before we audit your stack.</p>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-4 mb-6"
+          >
+            <div className="h-[1px] w-8 bg-secondary/50" />
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-secondary">Questions</span>
+            <div className="h-[1px] w-8 bg-secondary/50" />
+          </motion.div>
+          <h2 className="text-[clamp(2rem,5vw,4rem)] font-black uppercase tracking-tighter mb-4">Before you book</h2>
+          <p className="text-white/45 font-medium">Straight answers on launch speed, tools, and quality control.</p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="glass rounded-2xl overflow-hidden border-white/5">
+            <div key={faq.question} className="glass rounded-[2rem] overflow-hidden border-white/5 transition-all duration-500 hover:border-secondary/20 group">
               <button
-                className="w-full p-6 text-left flex items-center justify-between hover:bg-white/5 transition-colors"
+                className="w-full px-8 py-8 text-left flex items-center justify-between transition-colors outline-none focus-visible:bg-white/5"
                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+                aria-expanded={openIndex === idx}
+                aria-controls={`faq-answer-${idx}`}
               >
-                <span className="font-bold text-lg">{faq.question}</span>
-                <div className="flex-shrink-0 ml-4 text-primary">
+                <span className="font-black text-xl uppercase tracking-tighter group-hover:text-secondary transition-colors">{faq.question}</span>
+                <div className={cn("flex-shrink-0 ml-4 transition-all duration-300", openIndex === idx ? "text-accent opacity-100" : "opacity-40 group-hover:opacity-100 group-hover:text-secondary")}>
                   {openIndex === idx ? <Minus size={20} /> : <Plus size={20} />}
                 </div>
               </button>
-              
+
               <AnimatePresence>
                 {openIndex === idx && (
                   <motion.div
+                    id={`faq-answer-${idx}`}
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <div className="px-6 pb-6 text-foreground/60 leading-relaxed">
+                    <div className="px-8 pb-10 text-white/65 font-medium leading-relaxed max-w-2xl">
                       {faq.answer}
                     </div>
                   </motion.div>

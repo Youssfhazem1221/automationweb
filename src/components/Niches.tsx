@@ -8,98 +8,131 @@ const niches = [
   {
     icon: Home,
     title: "Real Estate",
-    tag: "Real Estate",
-    benefit: "Close more deals without chasing leads.",
-    desc: "Instant replies, lead qualification, appointment prompts, and follow-up sequences keep properties moving.",
-    stat: "Avg. 3x faster response",
-    color: "emerald",
+    sector: "Industry 01",
+    benefit: "Reply before the next agent does.",
+    desc: "Qualify buyer and seller inquiries, route hot prospects to agents, and keep every viewing or valuation request moving.",
+    stat: "3x Faster Response",
+    accent: {
+      text: "text-secondary",
+      line: "bg-secondary/50 group-hover:bg-secondary",
+      icon: "bg-secondary/10 border-secondary/20 text-secondary group-hover:bg-secondary group-hover:text-background group-hover:shadow-[0_0_30px_rgba(56,189,248,0.35)]",
+      heading: "group-hover:text-secondary",
+      card: "hover:border-secondary/30",
+      glow: "bg-secondary/5 group-hover:bg-secondary/10",
+      button: "group-hover/btn:text-secondary",
+    },
   },
   {
     icon: Stethoscope,
     title: "Clinics",
-    tag: "Clinics",
-    benefit: "Fill your calendar automatically.",
-    desc: "Missed calls and slow replies create empty slots. Automation handles inquiry capture and booking follow-up.",
-    stat: "40% fewer missed bookings",
-    color: "blue",
+    sector: "Industry 02",
+    benefit: "Turn inquiries into booked appointments.",
+    desc: "Capture missed calls and messages, answer common questions, collect patient context, and guide qualified inquiries into open slots.",
+    stat: "Fewer Empty Slots",
+    accent: {
+      text: "text-emerald-400",
+      line: "bg-emerald-400/50 group-hover:bg-emerald-400",
+      icon: "bg-emerald-400/10 border-emerald-400/20 text-emerald-400 group-hover:bg-emerald-400 group-hover:text-background group-hover:shadow-[0_0_30px_rgba(52,211,153,0.32)]",
+      heading: "group-hover:text-emerald-400",
+      card: "hover:border-emerald-400/30",
+      glow: "bg-emerald-400/5 group-hover:bg-emerald-400/10",
+      button: "group-hover/btn:text-emerald-400",
+    },
   },
   {
     icon: ShoppingBag,
     title: "E-commerce",
-    tag: "E-commerce",
-    benefit: "Stop losing orders to slow support.",
-    desc: "Order tracking, cart recovery, and pre-sale answers happen instantly so your team focuses on exceptions.",
-    stat: "60% fewer support tickets",
-    color: "pink",
+    sector: "Industry 03",
+    benefit: "Recover revenue from support gaps.",
+    desc: "Automate pre-sale answers, order updates, abandoned-cart follow-up, and post-purchase support without slowing your team.",
+    stat: "More Recovered Carts",
+    accent: {
+      text: "text-accent",
+      line: "bg-accent/50 group-hover:bg-accent",
+      icon: "bg-accent/10 border-accent/20 text-accent group-hover:bg-accent group-hover:text-background group-hover:shadow-[0_0_30px_rgba(245,158,11,0.32)]",
+      heading: "group-hover:text-accent",
+      card: "hover:border-accent/30",
+      glow: "bg-accent/5 group-hover:bg-accent/10",
+      button: "group-hover/btn:text-accent",
+    },
   },
 ];
 
 export default function Niches() {
   return (
-    <section id="niches" className="bg-surface-muted/10">
+    <section id="niches" className="relative overflow-hidden">
       <div className="section-container">
-        <div className="text-center mb-20">
-          <motion.span
+        <div className="flex flex-col lg:flex-row items-end justify-between gap-12 mb-24">
+          <div className="max-w-2xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-4 mb-6"
+            >
+              <div className="h-px w-12 bg-accent/60" />
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">
+                Use Cases
+              </span>
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-[1] tracking-tighter"
+            >
+              Pick the workflow <br />
+              <span className="serif italic lowercase font-normal opacity-90 text-secondary">that costs you time.</span>
+            </motion.h2>
+          </div>
+          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-primary font-bold uppercase tracking-widest text-sm"
+            className="text-white/45 text-sm max-w-xs font-medium leading-relaxed"
           >
-            Niche Solutions
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl lg:text-5xl font-extrabold mt-4 tracking-tighter"
-          >
-            Built for Your Industry.
-          </motion.h2>
+            Velora adapts to your tools, team, and customer journey. These are the workflows where AI automation usually creates the fastest visible lift.
+          </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-8" role="list">
           {niches.map((niche, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+            <motion.article
+              key={niche.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className="glass p-8 rounded-3xl border-white/5 flex flex-col hover:border-primary/30 transition-colors"
+              className={`glass p-10 lg:p-12 rounded-[3.5rem] relative overflow-hidden group border-white/5 ${niche.accent.card} transition-all duration-700 bg-white/[0.01]`}
+              role="listitem"
             >
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${
-                niche.color === "emerald" ? "bg-emerald-500/20 text-emerald-400" :
-                niche.color === "blue" ? "bg-blue-500/20 text-blue-400" :
-                "bg-pink-500/20 text-pink-400"
-              }`}>
-                <niche.icon size={24} />
+              <div className="flex items-center justify-between mb-12">
+                <div className={`w-16 h-16 rounded-2xl border flex items-center justify-center transition-all duration-500 ${niche.accent.icon}`} aria-hidden="true">
+                  <niche.icon size={28} strokeWidth={1.5} />
+                </div>
+                <div className="flex flex-col items-end">
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/25 mb-1">{niche.sector}</span>
+                  <div className={`w-8 h-[1px] group-hover:w-12 transition-all ${niche.accent.line}`} />
+                </div>
               </div>
-              
-              <span className={`text-[10px] font-bold uppercase tracking-widest mb-2 ${
-                niche.color === "emerald" ? "text-emerald-400" :
-                niche.color === "blue" ? "text-blue-400" :
-                "text-pink-400"
-              }`}>
-                {niche.tag}
-              </span>
-              
-              <h3 className="text-2xl font-bold mb-4">{niche.benefit}</h3>
-              <p className="text-foreground/60 text-sm leading-relaxed mb-8 flex-1">
+
+              <h3 className={`text-3xl font-black uppercase tracking-tighter mb-6 transition-colors duration-500 leading-[1.1] ${niche.accent.heading}`}>{niche.benefit}</h3>
+              <p className="text-white/55 text-base leading-relaxed mb-12 font-medium">
                 {niche.desc}
               </p>
-              
-              <div className="pt-6 border-t border-white/5 mt-auto">
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-sm font-extrabold">{niche.stat}</span>
-                  <div className="flex -space-x-1">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="w-6 h-6 rounded-full bg-white/10 border border-white/5" />
-                    ))}
-                  </div>
+
+              <div className="pt-10 border-t border-white/5 mt-auto flex items-center justify-between">
+                <div className="flex flex-col">
+                  <span className={`text-[9px] font-black uppercase tracking-[0.3em] mb-1 ${niche.accent.text}`}>Primary Outcome</span>
+                  <span className="text-2xl font-black glow-brand text-white">{niche.stat}</span>
                 </div>
-                <Link href="#contact" className="btn-secondary w-full py-2 flex items-center justify-center gap-2 group">
-                  See {niche.title} Solutions
-                  <ArrowRight size={16} className="opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                <Link
+                  href="#contact"
+                  className="w-14 h-14 rounded-full glass border-white/10 flex items-center justify-center hover:scale-110 focus-visible:ring-2 focus-visible:ring-secondary transition-all group/btn bg-white/5"
+                  aria-label={`Get ${niche.title} automation solutions`}
+                >
+                  <ArrowRight size={20} className={`text-white/45 ${niche.accent.button} group-hover/btn:translate-x-1 transition-all`} aria-hidden="true" />
                 </Link>
               </div>
-            </motion.div>
+
+              <div className={`absolute -bottom-10 -right-10 w-40 h-40 blur-[80px] rounded-full transition-all duration-1000 ${niche.accent.glow}`} />
+            </motion.article>
           ))}
         </div>
       </div>

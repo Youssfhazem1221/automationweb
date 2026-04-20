@@ -1,26 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Syne } from "next/font/google";
+import { Space_Grotesk, Fraunces } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-});
-
-const syne = Syne({
-  variable: "--font-syne",
-  subsets: ["latin"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
-  title: "Proxy Solutions | AI Automation Agency",
-  description: "Done-for-you AI automation systems for Real Estate, Clinics, and E-commerce. Live in 48 hours.",
+  title: "Velora | AI Automation Agency for Leaner Operations",
+  description: "Done-for-you AI automation systems for customer intake, follow-up, scheduling, CRM updates, reporting, and team handoffs. Launch in 48 hours.",
 };
 
 export const viewport = {
@@ -35,14 +31,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth dark">
+    <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${fraunces.variable} antialiased relative`}
       >
+        <div className="stars-container">
+          <div className="nebula" />
+          <div className="stars" />
+          <div className="stars-near" />
+        </div>
+        <div className="grain" />
         <Navbar />
         {children}
       </body>
     </html>
   );
 }
-
