@@ -99,7 +99,7 @@ export default function Niches() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className={`glass p-10 lg:p-12 rounded-[3.5rem] relative overflow-hidden group border-white/5 ${niche.accent.card} transition-all duration-700 bg-white/[0.01]`}
+              className={`glass group relative flex h-full flex-col overflow-hidden rounded-[3.5rem] border-white/5 bg-white/[0.01] p-10 transition-all duration-700 lg:p-12 ${niche.accent.card}`}
               role="listitem"
             >
               <div className="flex items-center justify-between mb-12">
@@ -113,12 +113,12 @@ export default function Niches() {
               </div>
 
               <h3 className={`text-3xl font-black uppercase tracking-tighter mb-6 transition-colors duration-500 leading-[1.1] ${niche.accent.heading}`}>{niche.benefit}</h3>
-              <p className="text-white/55 text-base leading-relaxed mb-12 font-medium">
+              <p className="mb-12 flex-1 text-base font-medium leading-relaxed text-white/55">
                 {niche.desc}
               </p>
 
-              <div className="pt-10 border-t border-white/5 mt-auto flex items-center justify-between">
-                <div className="flex flex-col">
+              <div className="mt-auto flex items-end justify-between gap-6 border-t border-white/5 pt-10">
+                <div className="flex min-h-28 flex-col justify-end">
                   <span className={`text-[9px] font-black uppercase tracking-[0.3em] mb-1 ${niche.accent.text}`}>Primary Outcome</span>
                   <span className="text-2xl font-black glow-brand text-white">{niche.stat}</span>
                 </div>
