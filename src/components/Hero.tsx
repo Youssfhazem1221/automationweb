@@ -17,12 +17,22 @@ const events = [
   "AUDIT_CHECK: Workflow healthy",
 ];
 
+const queueSequence = [
+  { progress: 0.24, event: "INTAKE: New request captured", status: "Collecting_Input" },
+  { progress: 0.46, event: "TASK_ROUTED: Owner assigned", status: "Routing_To_Owner" },
+  { progress: 0.7, event: "CRM_SYNC: Record updated", status: "Syncing_Context" },
+  { progress: 0.9, event: "AUDIT_CHECK: Workflow healthy", status: "Workflow_Stable" },
+];
+
 export default function Hero() {
   const [workflowCount, setWorkflowCount] = useState(1204);
   const [activeFlows, setActiveFlows] = useState(14);
   const [isAiProcessing, setIsAiProcessing] = useState(true);
   const [lastEvent, setLastEvent] = useState("SYSTEM_BOOT_COMPLETE");
   const [pulse, setPulse] = useState(false);
+  const [queueProgress, setQueueProgress] = useState(queueSequence[0].progress);
+  const [queueStatus, setQueueStatus] = useState("Collecting_Input");
+  const [queueStep, setQueueStep] = useState(1);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,6 +49,28 @@ export default function Hero() {
       }
     }, 3000);
     return () => clearInterval(interval);
+  }, [isAiProcessing]);
+
+  useEffect(() => {
+    if (!isAiProcessing) return;
+
+    setQueueProgress(queueSequence[0].progress);
+    setQueueStatus(queueSequence[0].status);
+    setLastEvent(queueSequence[0].event);
+    setQueueStep(1);
+
+    const timeouts = queueSequence.slice(1).map((step, index) =>
+      window.setTimeout(() => {
+        setQueueProgress(step.progress);
+        setQueueStatus(step.status);
+        setLastEvent(step.event);
+        setQueueStep(index + 2);
+      }, (index + 1) * 950)
+    );
+
+    return () => {
+      timeouts.forEach(window.clearTimeout);
+    };
   }, [isAiProcessing]);
 
   return (
@@ -66,7 +98,7 @@ export default function Hero() {
             
             <h1 className="text-[clamp(3rem,5.4vw,5rem)] font-black leading-[0.9] tracking-tight uppercase mb-7">
               Automate the work <br />
-              <span className="serif italic font-normal lowercase tracking-normal text-secondary">that slows you down.</span>
+              <span className="hero-script-glow serif italic font-normal lowercase tracking-normal text-secondary">that slows you down.</span>
             </h1>
             
             <p className="text-base lg:text-[1.05rem] text-white/50 mb-9 max-w-lg leading-relaxed font-medium">
@@ -126,7 +158,7 @@ export default function Hero() {
                    <div className={cn("glass p-5 rounded-3xl border-white/5 transition-all group", pulse && "border-secondary/50 bg-secondary/5 shadow-[0_0_20px_rgba(56,189,248,0.1)]")}>
                       <span className="text-[9px] font-black uppercase tracking-widest opacity-30 mb-2 block">Workflows_Handled</span>
                       <div className="flex items-end gap-3">
-                         <span className="text-3xl font-black tracking-tighter text-white group-hover:text-secondary transition-colors">{workflowCount}</span>
+                         <span className="text-3xl font-black tracking-tighter text-white transition-colors duration-300 group-hover:text-emerald-400 group-hover:[text-shadow:0_0_18px_rgba(16,185,129,0.35)]">{workflowCount}</span>
                          <TrendingUp size={18} className="text-emerald-500 mb-2" />
                       </div>
                    </div>
@@ -151,8 +183,8 @@ export default function Hero() {
                    <div className="space-y-4">
                       <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
                          <motion.div 
-                            animate={{ width: isAiProcessing ? ["20%", "65%", "45%", "90%", "60%"] : "40%" }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                            animate={{ width: `${Math.round(queueProgress * 100)}%` }}
+                            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
                             className="h-full bg-gradient-to-r from-secondary to-accent shadow-[0_0_15px_rgba(56,189,248,0.5)]"
                          />
                       </div>
@@ -161,14 +193,27 @@ export default function Hero() {
                             {[1,2,3,4,5].map(i => (
                                <motion.div 
                                   key={i}
-                                  animate={{ opacity: isAiProcessing ? [0.2, 1, 0.2] : 0.2 }}
-                                  transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
-                                  className="w-1.5 h-1.5 rounded-full bg-secondary"
+                                  animate={{
+                                    opacity: i <= queueStep ? 1 : 0.2,
+                                    scale: i === queueStep && isAiProcessing ? 1.15 : 1,
+                                  }}
+                                  transition={{ duration: 0.35, ease: "easeOut" }}
+                                  className={cn(
+                                    "w-1.5 h-1.5 rounded-full transition-colors",
+                                    i < queueStep
+                                      ? "bg-secondary/80"
+                                      : i === queueStep
+                                        ? "bg-secondary shadow-[0_0_10px_rgba(56,189,248,0.55)]"
+                                        : "bg-secondary/30"
+                                  )}
                                />
                             ))}
                          </div>
-                         <span className="text-[9px] font-mono text-emerald-500 uppercase tracking-tighter">
-                           {isAiProcessing ? "Workflow_Engine_Active" : "Demo_Paused"}
+                         <span className={cn(
+                           "text-[9px] font-mono uppercase tracking-tighter transition-colors",
+                           isAiProcessing ? "text-emerald-500" : "text-white/35"
+                         )}>
+                           {isAiProcessing ? queueStatus : "Demo_Paused"}
                          </span>
                       </div>
                    </div>
