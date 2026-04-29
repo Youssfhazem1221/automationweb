@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Terminal } from "lucide-react";
 
 const logs = [
@@ -29,14 +26,10 @@ export default function MissionLogs() {
     <section className="relative overflow-hidden bg-white/[0.01]">
       <div className="section-container">
         <div className="max-w-4xl mb-24">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-4 mb-8"
-          >
+          <div className="flex items-center gap-4 mb-8">
             <div className="h-px w-12 bg-accent/60" />
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">Proof Snapshots</span>
-          </motion.div>
+          </div>
 
           <h2 className="text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-[0.9] tracking-tighter mb-10">
             Built around the numbers <br />
@@ -46,11 +39,8 @@ export default function MissionLogs() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
           {logs.map((log, idx) => (
-            <motion.article
+            <article
               key={log.target}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
               className="glass p-10 lg:p-12 rounded-[3.5rem] border-white/5 relative group hover:border-secondary/30 transition-all duration-700 overflow-hidden bg-white/[0.01]"
               aria-labelledby={`log-target-${idx}`}
             >
@@ -77,18 +67,16 @@ export default function MissionLogs() {
                 </div>
                 <div className="flex items-center gap-2" aria-hidden="true">
                   <div className="h-1.5 w-16 bg-white/5 rounded-full overflow-hidden">
-                    <motion.div
+                    <div
                       className="h-full bg-secondary shadow-[0_0_10px_rgba(56,189,248,0.5)]"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: log.integrity }}
-                      transition={{ duration: 1.5, delay: 0.5 }}
+                      style={{ width: log.integrity }}
                     />
                   </div>
                 </div>
               </div>
 
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/[0.06] to-transparent pointer-events-none -translate-y-full group-hover:translate-y-full transition-transform duration-[3000ms] ease-in-out" />
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>

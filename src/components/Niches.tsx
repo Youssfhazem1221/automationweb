@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Home, Stethoscope, ShoppingBag, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
@@ -62,45 +59,31 @@ export default function Niches() {
   return (
     <section id="niches" className="relative overflow-hidden">
       <div className="section-container">
-        <div className="flex flex-col lg:flex-row items-end justify-between gap-12 mb-24">
-          <div className="max-w-2xl">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-4 mb-6"
-            >
+        <div className="mb-20 flex flex-col items-center gap-10 text-center lg:mb-24 lg:flex-row lg:items-end lg:justify-between lg:text-left">
+          <div className="mx-auto flex max-w-2xl flex-col items-center lg:mx-0 lg:items-start">
+            <div className="mb-6 flex items-center gap-4">
               <div className="h-px w-12 bg-accent/60" />
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-accent">
                 Use Cases
               </span>
-            </motion.div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-[1] tracking-tighter"
-            >
+            </div>
+            <h2 className="max-w-[12ch] text-[clamp(2rem,5vw,4rem)] font-black uppercase leading-[1] tracking-tighter sm:max-w-none">
               Pick the workflow <br />
               <span className="serif italic lowercase font-normal opacity-90 text-secondary">that costs you time.</span>
-            </motion.h2>
+            </h2>
           </div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-white/45 text-sm max-w-xs font-medium leading-relaxed"
-          >
+          <p className="mx-auto max-w-sm text-pretty text-sm font-medium leading-relaxed text-white/45 lg:mx-0 lg:max-w-xs">
             Velora adapts to your tools, team, and customer journey. These are the workflows where AI automation usually creates the fastest visible lift.
-          </motion.p>
+          </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8" role="list">
           {niches.map((niche, idx) => (
-            <motion.article
+            <article
               key={niche.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
               className={`glass group relative flex h-full flex-col overflow-hidden rounded-[3.5rem] border-white/5 bg-white/[0.01] p-10 transition-all duration-700 lg:p-12 ${niche.accent.card}`}
               role="listitem"
+              style={{ transitionDelay: `${idx * 80}ms` }}
             >
               <div className="flex items-center justify-between mb-12">
                 <div className={`w-16 h-16 rounded-2xl border flex items-center justify-center transition-all duration-500 ${niche.accent.icon}`} aria-hidden="true">
@@ -132,7 +115,7 @@ export default function Niches() {
               </div>
 
               <div className={`absolute -bottom-10 -right-10 w-40 h-40 blur-[80px] rounded-full transition-all duration-1000 ${niche.accent.glow}`} />
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>

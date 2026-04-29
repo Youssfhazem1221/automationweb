@@ -29,7 +29,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-[100] px-4 py-4 md:py-6 pointer-events-none">
       <nav className={cn(
-        "max-w-7xl mx-auto grid grid-cols-[auto_auto] lg:grid-cols-[auto_1fr_auto] items-center justify-between gap-4 transition-all duration-500 pointer-events-auto",
+        "max-w-7xl mx-auto grid grid-cols-[auto_auto] lg:grid-cols-[auto_1fr_auto] items-center gap-3 lg:gap-8 transition-all duration-500 pointer-events-auto",
         "glass px-4 py-3 md:px-5 lg:px-6 lg:py-3 rounded-[1.75rem] border-white/10 shadow-2xl",
         isScrolled ? "bg-background/85 backdrop-blur-2xl border-secondary/20" : "bg-background/50"
       )}>
@@ -60,13 +60,14 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center justify-center gap-1 justify-self-center rounded-full border border-white/10 bg-white/[0.035] p-1.5">
+        <div className="hidden lg:flex items-center justify-self-center self-stretch px-2 xl:px-3">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="px-5 xl:px-6 py-2.5 text-[11px] font-black uppercase tracking-widest text-white/50 hover:text-white transition-all hover:bg-white/[0.07] rounded-full focus-visible:ring-2 focus-visible:ring-secondary"
+              className="relative flex items-center px-4 xl:px-5 text-[11px] font-black uppercase tracking-[0.22em] text-white/46 transition-all hover:text-white focus-visible:ring-2 focus-visible:ring-secondary"
             >
+              <span className="absolute left-0 top-1/2 hidden h-5 w-px -translate-y-1/2 bg-white/8 first:hidden xl:block" aria-hidden="true" />
               {link.name}
             </Link>
           ))}
@@ -74,20 +75,23 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-3 justify-self-end">
-          <div className="hidden lg:flex items-center gap-2 px-4 py-2.5 bg-white/[0.035] rounded-full border border-white/10">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]" />
-            <span className="text-[9px] font-black uppercase tracking-widest text-white/45">
-              48h first launch
-            </span>
+          <div className="hidden lg:flex items-center gap-3 rounded-full border border-white/8 bg-black/20 pl-3 pr-1.5 py-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+            <div className="flex items-center gap-2 px-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.6)]" />
+              <span className="text-[9px] font-black uppercase tracking-[0.18em] text-white/45">
+                48h first launch
+              </span>
+            </div>
+            <div className="h-7 w-px bg-white/8" aria-hidden="true" />
+            <Link
+              href="#contact"
+              className="flex items-center gap-2 rounded-full bg-secondary px-4 xl:px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.18em] text-background transition-all hover:bg-accent hover:shadow-[0_0_24px_rgba(56,189,248,0.22)]"
+            >
+              <span className="xl:hidden">Audit</span>
+              <span className="hidden xl:inline">Audit My Ops</span>
+              <ArrowUpRight size={14} aria-hidden="true" />
+            </Link>
           </div>
-
-          <Link
-            href="#contact"
-            className="hidden md:flex items-center gap-2 px-6 py-3 bg-secondary text-background text-[11px] font-black uppercase tracking-widest rounded-full hover:bg-accent transition-all shadow-lg hover:shadow-secondary/20"
-          >
-            Audit My Ops
-            <ArrowUpRight size={14} aria-hidden="true" />
-          </Link>
 
           {/* Mobile Toggle */}
           <button

@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Search, PenTool, Share2 } from "lucide-react";
 
 const steps = [
@@ -29,23 +26,15 @@ export default function HowItWorks() {
     <section id="how-it-works" className="relative">
       <div className="section-container relative z-10">
         <div className="text-center mb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-4 mb-6"
-          >
+          <div className="inline-flex items-center gap-4 mb-6">
             <div className="h-[1px] w-8 bg-secondary/50" />
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-secondary">The Process</span>
             <div className="h-[1px] w-8 bg-secondary/50" />
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9] tracking-tighter"
-          >
+          </div>
+          <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black uppercase leading-[0.9] tracking-tighter">
             From manual follow-up <br />
             <span className="serif italic lowercase font-normal opacity-90 text-secondary">to automated bookings.</span>
-          </motion.h2>
+          </h2>
         </div>
 
         <div className="relative">
@@ -53,11 +42,8 @@ export default function HowItWorks() {
 
           <div className="grid lg:grid-cols-3 gap-20">
             {steps.map((step, idx) => (
-              <motion.div
+              <div
                 key={step.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.2 }}
                 className="relative text-center group"
               >
                 <div className="w-24 h-24 rounded-full glass flex items-center justify-center text-white mx-auto mb-12 relative z-10 group-hover:bg-secondary group-hover:text-background transition-all duration-700 shadow-2xl">
@@ -74,16 +60,12 @@ export default function HowItWorks() {
                 <div className="mt-8 inline-block py-1.5 px-6 rounded-full glass text-[10px] font-black uppercase tracking-[0.2em] text-white/65">
                   {step.day}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="mt-24 p-16 glass rounded-[3rem] text-center border-white/5 relative overflow-hidden group"
-        >
+        <div className="mt-24 p-16 glass rounded-[3rem] text-center border-white/5 relative overflow-hidden group">
           <div className="relative z-10">
             <h3 className="text-[clamp(1.5rem,4vw,3.5rem)] font-black uppercase leading-none mb-8 tracking-tighter">Want to know what is leaking revenue?</h3>
             <p className="text-white/45 mb-12 max-w-xl mx-auto text-lg font-medium leading-relaxed">
@@ -95,7 +77,7 @@ export default function HowItWorks() {
           </div>
 
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-secondary/[0.06] to-transparent pointer-events-none group-hover:from-accent/[0.08] transition-all duration-1000" />
-        </motion.div>
+        </div>
       </div>
     </section>
   );

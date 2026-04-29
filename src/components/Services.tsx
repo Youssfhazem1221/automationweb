@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { ArrowUpRight, Database, Cpu, Sparkles } from "lucide-react";
 import Link from "next/link";
 
@@ -45,43 +42,29 @@ export default function Services() {
     <section id="services" className="relative overflow-hidden">
       <div className="section-container relative z-10">
         <div className="max-w-4xl mb-24">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-4 mb-8"
-          >
+          <div className="flex items-center gap-4 mb-8">
             <div className="h-px w-12 bg-secondary/50" />
             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-secondary">
               What We Build
             </span>
-          </motion.div>
+          </div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-[clamp(2.5rem,6vw,5rem)] font-black leading-[0.9] uppercase mb-10"
-          >
+          <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-black leading-[0.9] uppercase mb-10">
             Systems that turn <br />
             <span className="serif italic lowercase font-normal tracking-tight opacity-90 text-secondary">attention into appointments.</span>
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-white/55 text-xl max-w-2xl leading-relaxed"
-          >
+          <p className="text-white/55 text-xl max-w-2xl leading-relaxed">
             We focus on the moments that create revenue: fast replies, better qualification, clean handoff, and persistent follow-up until the lead books or opts out.
-          </motion.p>
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, idx) => (
-            <motion.div
+            <div
               key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1, duration: 0.8 }}
               className="glass p-10 rounded-[2.5rem] relative overflow-hidden group transition-all duration-700 hover:shadow-[0_0_60px_rgba(56,189,248,0.12)] border-white/5 hover:border-secondary/25"
+              style={{ transitionDelay: `${idx * 80}ms` }}
             >
               <div className="relative z-10">
                 <div className="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary mb-10 group-hover:bg-secondary group-hover:text-background transition-all duration-500 shadow-inner" aria-hidden="true">
@@ -110,7 +93,7 @@ export default function Services() {
               </div>
 
               <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-secondary/5 blur-[50px] rounded-full group-hover:bg-accent/10 transition-all duration-1000" />
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

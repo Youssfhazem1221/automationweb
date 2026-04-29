@@ -10,8 +10,10 @@ import {
   Calendar,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useInViewport } from "@/hooks/useInViewport";
 
 const liveLeads = [
   { id: "L-904", source: "WhatsApp", action: "Meeting Booked", time: "2m ago", color: "text-emerald-500" },
@@ -20,12 +22,24 @@ const liveLeads = [
 ];
 
 export default function SystemDashboard() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInViewport = useInViewport(sectionRef, { threshold: 0.2 });
   const [leadCount, setLeadCount] = useState(1240);
   const [currentLeads, setCurrentLeads] = useState(liveLeads);
+  const [leadRate, setLeadRate] = useState(84.2);
+  const [leadTrend, setLeadTrend] = useState("+2.4%");
+  const [lastSync, setLastSync] = useState("updated 12s ago");
 
   useEffect(() => {
+    if (!isInViewport) return;
+
     const interval = setInterval(() => {
       const chance = Math.random();
+      const drift = Math.random() > 0.55 ? 0.1 : -0.1;
+      setLeadRate((prev) => Math.max(82.8, Math.min(86.4, Number((prev + drift).toFixed(1)))));
+      setLeadTrend(drift >= 0 ? "+2.4%" : "+1.8%");
+      setLastSync(`updated ${Math.floor(Math.random() * 9) + 3}s ago`);
+
       if (chance > 0.7) {
         setLeadCount(prev => prev + 1);
         const newLead = {
@@ -39,10 +53,10 @@ export default function SystemDashboard() {
       }
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isInViewport]);
 
   return (
-    <section className="relative overflow-hidden py-24 lg:py-32" aria-labelledby="dashboard-title">
+    <section ref={sectionRef} className="relative overflow-hidden py-24 lg:py-32" aria-labelledby="dashboard-title">
       <div className="section-container">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-20">
           <div className="max-w-3xl">
@@ -65,14 +79,43 @@ export default function SystemDashboard() {
             </p>
           </div>
           
-          <div className="flex flex-col gap-4">
-             <div className="glass p-6 rounded-[2rem] border-secondary/20 bg-secondary/5 min-w-[280px]">
-                <div className="flex items-center justify-between mb-2">
-                   <span className="text-[10px] font-black uppercase tracking-widest text-secondary">Live Performance</span>
-                   <TrendingUp size={16} className="text-secondary" />
+          <div className="flex w-full flex-col gap-4 lg:w-auto">
+             <div className="glass min-w-[280px] rounded-[2rem] border-secondary/20 bg-secondary/5 p-6 sm:min-w-[320px]">
+                <div className="mb-4 flex items-start justify-between gap-4">
+                   <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="relative flex h-2.5 w-2.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70" />
+                          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.6)]" />
+                        </span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-secondary">Live Performance</span>
+                      </div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/32">{lastSync}</p>
+                   </div>
+                   <div className="rounded-full border border-secondary/20 bg-secondary/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-secondary">
+                      {leadTrend}
+                   </div>
                 </div>
-                <div className="text-3xl font-black tracking-tighter mb-1">84.2%</div>
-                <p className="text-[10px] font-bold text-white/40 uppercase">Qualified Lead Rate</p>
+                <div className="mb-3 flex items-end justify-between gap-4">
+                  <div>
+                    <div className="text-4xl font-black tracking-tighter">{leadRate.toFixed(1)}%</div>
+                    <p className="text-[10px] font-bold uppercase text-white/40">Qualified Lead Rate</p>
+                  </div>
+                  <TrendingUp size={18} className="mb-2 text-secondary" />
+                </div>
+                <div className="space-y-2">
+                  <div className="h-2 overflow-hidden rounded-full bg-white/6">
+                    <motion.div
+                      animate={{ width: `${leadRate}%` }}
+                      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                      className="h-full rounded-full bg-gradient-to-r from-secondary via-sky-300 to-emerald-400 shadow-[0_0_20px_rgba(56,189,248,0.35)]"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-white/28">
+                    <span>Intent scored</span>
+                    <span>Routing live</span>
+                  </div>
+                </div>
              </div>
           </div>
         </div>

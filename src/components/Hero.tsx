@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { ArrowRight, Activity, Zap, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useInViewport } from "@/hooks/useInViewport";
 
 const events = [
   "INTAKE: New request captured",
@@ -25,6 +26,8 @@ const queueSequence = [
 ];
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInViewport = useInViewport(sectionRef, { threshold: 0.35 });
   const [workflowCount, setWorkflowCount] = useState(1204);
   const [activeFlows, setActiveFlows] = useState(14);
   const [isAiProcessing, setIsAiProcessing] = useState(true);
@@ -33,26 +36,29 @@ export default function Hero() {
   const [queueProgress, setQueueProgress] = useState(queueSequence[0].progress);
   const [queueStatus, setQueueStatus] = useState("Collecting_Input");
   const [queueStep, setQueueStep] = useState(1);
+  const isLive = isAiProcessing && isInViewport;
 
   useEffect(() => {
+    if (!isLive) return;
+
     const interval = setInterval(() => {
-      if (isAiProcessing) {
-        const workflowChange = Math.random() > 0.6 ? 1 : 0;
-        if (workflowChange > 0) {
-          setWorkflowCount(prev => prev + workflowChange);
-          setPulse(true);
-          setLastEvent(events[Math.floor(Math.random() * events.length)]);
-          setTimeout(() => setPulse(false), 1000);
-        }
-        
-        if (Math.random() > 0.8) setActiveFlows(prev => Math.max(12, Math.min(18, prev + (Math.random() > 0.5 ? 1 : -1))));
+      const workflowChange = Math.random() > 0.6 ? 1 : 0;
+      if (workflowChange > 0) {
+        setWorkflowCount(prev => prev + workflowChange);
+        setPulse(true);
+        setLastEvent(events[Math.floor(Math.random() * events.length)]);
+        window.setTimeout(() => setPulse(false), 1000);
+      }
+
+      if (Math.random() > 0.8) {
+        setActiveFlows(prev => Math.max(12, Math.min(18, prev + (Math.random() > 0.5 ? 1 : -1))));
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, [isAiProcessing]);
+  }, [isLive]);
 
   useEffect(() => {
-    if (!isAiProcessing) return;
+    if (!isLive) return;
 
     setQueueProgress(queueSequence[0].progress);
     setQueueStatus(queueSequence[0].status);
@@ -71,10 +77,10 @@ export default function Hero() {
     return () => {
       timeouts.forEach(window.clearTimeout);
     };
-  }, [isAiProcessing]);
+  }, [isLive]);
 
   return (
-    <section className="relative min-h-screen lg:min-h-[760px] xl:min-h-[780px] flex items-center pt-28 lg:pt-16 overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-screen lg:min-h-[760px] xl:min-h-[780px] flex items-center pt-28 lg:pt-16 overflow-hidden">
       {/* Background Atmosphere */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-secondary/[0.08] to-transparent" />

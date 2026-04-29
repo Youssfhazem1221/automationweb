@@ -5,7 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { AlertCircle, CheckCircle2, ChevronDown, Send } from "lucide-react";
 
 const WEB3FORMS_ACCESS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY?.trim() || "7538807f-ee2b-4f4a-9f4a-35f4289442e4";
+  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY?.trim() ||
+  "7538807f-ee2b-4f4a-9f4a-35f4289442e4";
 const fieldClassName =
   "w-full rounded-3xl border border-white/10 bg-black/30 px-6 py-5 text-sm font-bold tracking-tight text-white shadow-[0_12px_35px_rgba(0,0,0,0.24)] transition-all placeholder:text-white/25 focus:border-secondary/50 focus:bg-black/40 focus:outline-none";
 
